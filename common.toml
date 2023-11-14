@@ -6,7 +6,7 @@ description = "auto minting function for synthetix v2x with gelato"
 description = "Synthetix V2X ReadAddressResolver Address"
 
 [contract.maxmint]
-artifacts = "MaxMint"
+artifact = "MaxMint"
 args = [
-    "<%= setting.addressresolver =%>"
+    "<%= settings.addressresolver %>"
 ]

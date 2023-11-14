@@ -1,4 +1,4 @@
-name = "maxmint-eth-mainnet"
+name = "maxmint"
 version = "1.0.0"
 description = "Eth Mainnet deployment of MaxMint"
 include = [
