@@ -1,0 +1,13 @@
+name = "maxmint-op-mainnet"
+version = "1.0.0"
+description = "OP Mainnet deployment of MaxMint"
+
+
+[setting.addressresolver]
+defaultValue = "0x1Cb059b7e74fD21665968C908806143E744D5F30"
+
+[contract.maxmint]
+artifact = "MaxMint"
+args = [
+    "<%= setting.addressresolver =%>"
+]

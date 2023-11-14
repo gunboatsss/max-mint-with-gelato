@@ -1,0 +1,9 @@
+name = "maxmint-eth-mainnet"
+version = "1.0.0"
+description = "Eth Mainnet deployment of MaxMint"
+include = [
+    "common.toml"
+]
+
+[setting.addressresolver]
+defaultValue = "0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2"

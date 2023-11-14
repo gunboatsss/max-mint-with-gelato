@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: UNLICENSED
+// Modified from https://github.com/gelatodigital/w3f-solidity-synthetix
+
 pragma solidity =0.8.20;
 
 import {AddressResolver} from "./interfaces/AddressResolver.sol";
