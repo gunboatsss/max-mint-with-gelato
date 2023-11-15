@@ -18,9 +18,9 @@ contract MaxMint {
         uint120 minimumIssuedsUSD;
     }
 
-    // @notice: Name of Synthetix contracts to resolve, Synthetix is pointing to ProxyERC20
+    // @notice: Name of Synthetix contracts to resolve
 
-    bytes32 private constant SYNTHETIX = "ProxyERC20";
+    bytes32 private constant SYNTHETIX = "Synthetix";
     bytes32 private constant DELEGATE_APPROVALS = "DelegateApprovals";
     bytes32 private constant SYSTEM_SETTINGS = "SystemSettings";
 
@@ -62,13 +62,18 @@ contract MaxMint {
             }
         }
         else if (currentConfig.mode == 2) {
-            (uint256 maxIssuable, uint256 alreadyIssued, ) = SNX.remainingIssuableSynths(_account);
-            if(currentConfig.minimumIssuedsUSD > maxIssuable - alreadyIssued) {
+            (uint256 maxIssuable,, ) = SNX.remainingIssuableSynths(_account);
+            if(maxIssuable == 0) {
+                execPayload = bytes("Account already below max issuable");
+                return (false, execPayload);
+            }
+            else if(currentConfig.minimumIssuedsUSD > maxIssuable) {
                 execPayload = bytes("sUSD avaliable is lower than set threshold");
+                return (false, execPayload);
             }
         }
 
-        if (delegateApprovals.canIssueFor(_account, dedicatedMsgSender)) {
+        if (!delegateApprovals.canIssueFor(_account, dedicatedMsgSender)) {
             execPayload = bytes("Not approved for issuing");
             return (false, execPayload);
         }
@@ -82,7 +87,7 @@ contract MaxMint {
     }
 
     function setConfig(Configuation calldata _config) external {
-        if(_config.mode >= 2) revert InvalidConfig();
+        if(_config.mode > 2) revert InvalidConfig();
         config[msg.sender] = _config;
     }
 

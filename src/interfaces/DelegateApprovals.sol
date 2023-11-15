@@ -5,4 +5,5 @@ interface DelegateApprovals {
         address authoriser,
         address delegate
     ) external view returns (bool);
+    function approveIssueOnBehalf(address delegate) external;
 }

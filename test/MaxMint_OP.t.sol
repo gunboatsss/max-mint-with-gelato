@@ -42,7 +42,4 @@ contract MaxMintOPTest is Test {
             )
         );
     }
-    function test_minting() public {
-        
-    }
 }
