@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 // Modified from https://github.com/gelatodigital/w3f-solidity-synthetix
 
-pragma solidity =0.8.20;
+pragma solidity ^0.8.20;
 
 import {AddressResolver} from "./interfaces/AddressResolver.sol";
 import {DelegateApprovals} from "./interfaces/DelegateApprovals.sol";
@@ -10,8 +10,10 @@ import {Synthetix} from "./interfaces/Synthetix.sol";
 import {SystemSettings} from "./interfaces/SystemSettings.sol";
 
 contract MaxMint {
-    // @notice: 0 for disabled, 1 for issuing by c-ratio and 2 for issuing by minimum sUSD, set via minimum issued sUSD or with minimum C-ratio
-    // (Synthetix stored c-ratio as 1/n displayed from the UI)
+    // @notice Configuration for minting
+    // @custom:mode 0 for disabled, 1 for using C-ratio, 2 for using minimum issued sUSD
+    // @custom:minimumCRatio C-ratio to mint, in form of WAD (1e18) and as debt/collateral (1/n from the UI)
+    // @custom:minimumIssuedsUSD minimum sUSD before it can be minted, in form of WAD
     struct Configuation {
         uint8 mode;
         uint120 minimumCRatio;

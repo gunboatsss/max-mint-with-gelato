@@ -4,7 +4,7 @@ pragma solidity =0.8.20;
 
 import "forge-std/console2.sol";
 import "forge-std/Test.sol";
-import {MaxMint} from "../src/MaxMint.sol";
+import {MaxMint} from "../contracts/MaxMint.sol";
 
 contract MaxMintOPTest is Test {
     string OP_MAINNET_RPC = vm.envString("OP_MAINNET_RPC");

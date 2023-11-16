@@ -4,10 +4,10 @@ pragma solidity =0.8.20;
 
 import "forge-std/console2.sol";
 import "forge-std/Test.sol";
-import {MaxMint} from "../src/MaxMint.sol";
-import {OpsProxyFactory} from "../src/interfaces/OpsProxyFactory.sol";
-import {Synthetix} from "../src/interfaces/Synthetix.sol";
-import {DelegateApprovals} from "../src/interfaces/DelegateApprovals.sol";
+import {MaxMint} from "../contracts/MaxMint.sol";
+import {OpsProxyFactory} from "../contracts/interfaces/OpsProxyFactory.sol";
+import {Synthetix} from "../contracts/interfaces/Synthetix.sol";
+import {DelegateApprovals} from "../contracts/interfaces/DelegateApprovals.sol";
 
 contract MaxMintETHTest is Test {
     MaxMint mm;

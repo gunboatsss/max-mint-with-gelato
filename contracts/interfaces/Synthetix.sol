@@ -1,4 +1,4 @@
-pragma solidity =0.8.20;
+pragma solidity ^0.8.20;
 
 interface Synthetix {
     function remainingIssuableSynths(address issuer)

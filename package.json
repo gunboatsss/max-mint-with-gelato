@@ -2,18 +2,51 @@
   "name": "max-mint-with-gelato",
   "version": "1.0.0",
   "description": "Automate minting on Synthetix v2x with Gelato",
-  "main": "index.js",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write .",
+    "test": "forge test"
   },
-  "author": "",
+  "author": "GUNBOATs",
   "license": "ISC",
   "devDependencies": {
+    "@evmts/ts-plugin": "^0.11.2",
+    "@evmts/vite-plugin": "^0.11.2",
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.27.4",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "autoprefixer": "^10.4.14",
+    "daisyui": "^3.1.6",
     "ds-test": "github:dapphub/ds-test",
-    "forge-std": "github:foundry-rs/forge-std"
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-svelte": "^2.30.0",
+    "forge-std": "github:foundry-rs/forge-std",
+    "postcss": "^8.4.24",
+    "postcss-load-config": "^4.0.1",
+    "prettier": "^3.0.0",
+    "prettier-plugin-svelte": "^3.0.0",
+    "svelte": "^4.0.5",
+    "svelte-check": "^3.6.0",
+    "tailwindcss": "^3.3.2",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0",
+    "vite": "^4.4.2"
+  },
+  "type": "module",
+  "dependencies": {
+    "@evmts/core": "^0.11.2",
+    "@evmts/viem": "^0.10.0",
+    "viem": "^1.19.1"
   }
 }
