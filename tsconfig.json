@@ -15,7 +15,13 @@
 				"name": "@evmts/ts-plugin",
 				"localContracts" : {
 					"contracts": [
-						
+						{
+							"name": "MaxMint",
+							"addresses": {
+								"1": "0x509c4C872d2a8A82aD2C9Cbd09869697c7C6729b",
+								"10": "0xaD2E8F76f5f7b4378fD49fE62b8C0960511cf734"
+							}
+						}
 					]
 				}
 			}

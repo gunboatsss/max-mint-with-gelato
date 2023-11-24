@@ -6,5 +6,13 @@ remappings = [
     "ds-test/=node_modules/ds-test/src/",
     "forge-std/=node_modules/forge-std/src/"
 ]
+solc_version = "0.8.23"
+via_ir = true
 
+[profile.op_mainnet]
+evm_version = "paris"
+
+[profile.maxmint_verification]
+solc_version = "0.8.20"
+via_ir = false
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

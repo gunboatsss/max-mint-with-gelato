@@ -13,4 +13,7 @@ interface Synthetix {
     function collateralisationRatio(address issuer) external view returns (uint);
 
     function issueMaxSynthsOnBehalf(address issueForAddress) external;
+
+    function burnSynthsToTargetOnBehalf(address burnForAddress) external;
+    function burnSynthsToTarget() external;
 }

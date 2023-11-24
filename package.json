@@ -47,6 +47,7 @@
   "dependencies": {
     "@evmts/core": "^0.11.2",
     "@evmts/viem": "^0.10.0",
+    "@wagmi/core": "^1.4.7",
     "viem": "^1.19.1"
   }
 }
