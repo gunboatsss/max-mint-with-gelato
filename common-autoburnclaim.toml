@@ -1,0 +1,12 @@
+name = "auto-burn-and-claim"
+version = "1.0.0"
+description = "automatically (burn and) claim snx v2x reward via gelato automate"
+
+[setting.addressresolver]
+description = "Synthetix V2X ReadAddressResolver Address"
+
+[contract.autoburnclaim]
+artifact = "AutoBurnAndClaim"
+args = [
+    "<%= settings.addressresolver %>"
+]

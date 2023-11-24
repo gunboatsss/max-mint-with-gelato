@@ -1,0 +1,9 @@
+name = "auto-burn-claim-eth"
+version = "1.0.0"
+description = "Eth Mainnet deployment of AutoBurnAndClaim"
+include = [
+    "common-autoburnclaim.toml"
+]
+
+[setting.addressresolver]
+defaultValue = "0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2"
