@@ -8,4 +8,6 @@ interface FeePool {
     function totalRewardsAvailable() external view returns (uint);
 
     function claimOnBehalf(address claimingForAddress) external returns (bool);
+
+    function claimFees() external returns (bool);
 }

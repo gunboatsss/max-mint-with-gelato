@@ -63,7 +63,7 @@ contract AutoBurnAndClaimV2 {
 
         //third, is reward avaliable to claim?
         (uint256 fee, uint256 SNXRewards) = feePool.feesAvailable(_account);
-        if((fee + SNXRewards) == 0 && feePool.totalRewardsAvailable() == 0) {
+        if((fee + SNXRewards) == 0 || feePool.totalRewardsAvailable() == 0) {
             return (false, "no reward avaliable");
         }
 

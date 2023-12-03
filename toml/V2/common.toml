@@ -1,0 +1,34 @@
+name = "synthetix-automate"
+version = "2.0.1"
+description = "Automate Synthetix Staking action with Gelato Web 3 Functions"
+
+
+[setting.addressresolver]
+description = "Synthetix V2X ReadAddressResolver Address"
+
+[setting.automate]
+defaultValue = "0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0"
+description = "Gelato Automate address"
+
+
+[setting.salt]
+defaultValue = "snxautomate"
+
+[setting.bundleSalt]
+defaultValue = "snxautomate"
+
+[contract.maxmint]
+artifact = "MaxMintV2"
+args = [
+    "<%= settings.addressresolver %>",
+    "<%= settings.automate %>"
+]
+salt = "69420"
+
+[contract.autoburnandclaim]
+artifact = "AutoBurnAndClaimV2"
+args = [
+    "<%= settings.addressresolver %>",
+    "<%= settings.automate %>"
+]
+salt = "69420"

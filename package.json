@@ -1,6 +1,6 @@
 {
   "name": "max-mint-with-gelato",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Automate minting on Synthetix v2x with Gelato",
   "directories": {
     "lib": "lib",

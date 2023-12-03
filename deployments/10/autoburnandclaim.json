@@ -1,0 +1,106 @@
+{
+  "address": "0x683fCdbd376e18d23A044f29869B5de79e51C939",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_SNXAddressResolver",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_automate",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "name",
+          "type": "bytes32"
+        }
+      ],
+      "name": "ZeroAddressResolved",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "baseFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_account",
+          "type": "address"
+        }
+      ],
+      "name": "checker",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        },
+        {
+          "internalType": "bytes",
+          "name": "execPayload",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "rebuildCaches",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_baseFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "setBaseFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "constructorArgs": [
+    "0x1Cb059b7e74fD21665968C908806143E744D5F30",
+    "0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0"
+  ],
+  "linkedLibraries": {},
+  "deployTxnHash": "0x88a9777625adcfc737bf584bb7855a4f99dc44f2c904a1e9b68185f7c1a3105b",
+  "sourceName": "contracts/V2/AutoBurnAndClaimV2.sol",
+  "contractName": "AutoBurnAndClaimV2",
+  "deployedOn": "contract.autoburnandclaim",
+  "gasUsed": 1110161,
+  "gasCost": "9179254"
+}

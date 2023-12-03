@@ -10,6 +10,7 @@ import {OpsProxyFactory} from "../contracts/interfaces/OpsProxyFactory.sol";
 import {OpsProxy} from "../contracts/interfaces/OpsProxy.sol";
 import {Synthetix} from "../contracts/interfaces/Synthetix.sol";
 import {DelegateApprovals} from "../contracts/interfaces/DelegateApprovals.sol";
+import {FeePool} from "../contracts/interfaces/FeePool.sol";
 
 contract AutoBurnAndClaimV2Test is Test {
     using stdStorage for StdStorage;
@@ -22,6 +23,7 @@ contract AutoBurnAndClaimV2Test is Test {
     Synthetix SNX = Synthetix(0xd0dA9cBeA9C3852C5d63A95F9ABCC4f6eA0F9032);
     DelegateApprovals delegate = DelegateApprovals(0x15fd6e554874B9e70F832Ed37f231Ac5E142362f);
     ERC20 debtShares = ERC20(0x89FCb32F29e509cc42d0C8b6f058C993013A843F);
+    FeePool feePool = FeePool(feepool);
 
     function setUp() public {
         vm.createSelectFork(ETH_MAINNET_RPC, 18634930);
@@ -67,7 +69,7 @@ contract AutoBurnAndClaimV2Test is Test {
         bytes[] memory checkCalldata = new bytes[](1);
         uint256[] memory checkValues = new uint256[](1);
         checkAddress[0] = feepool;
-        checkCalldata[0] = abi.encodeWithSignature("claimOnBehalf(address)", target);
+        checkCalldata[0] = abi.encodeWithSelector(FeePool.claimOnBehalf.selector, target);
         checkValues[0] = 0;
         assertEq0(
             execPayload,
@@ -128,5 +130,20 @@ contract AutoBurnAndClaimV2Test is Test {
         (succ, execPayload) = abac.checker(target);
         assertFalse(succ);
         assertEq0(execPayload, "not enough sUSD to fix c-ratio");
+    }
+
+    function test_already_claimed() public {
+        vm.startPrank(target);
+        SNX.burnSynthsToTarget();
+        feePool.claimFees();
+        (address dedicatedMsgSender, bool deployed) = ops.getProxyOf(target);
+        if(!deployed) {
+            ops.deployFor(target);
+        }
+        delegate.approveClaimOnBehalf(dedicatedMsgSender);
+        vm.stopPrank();
+        (bool succ, bytes memory execPayload) = abac.checker(target);
+        assertFalse(succ);
+        assertEq(execPayload, "no reward avaliable");
     }
 }
