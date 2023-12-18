@@ -24,6 +24,7 @@ args = [
     "<%= settings.automate %>"
 ]
 salt = "69420"
+create2 = true
 
 [contract.autoburnandclaim]
 artifact = "AutoBurnAndClaimV2"
@@ -32,3 +33,4 @@ args = [
     "<%= settings.automate %>"
 ]
 salt = "69420"
+create2 = true

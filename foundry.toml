@@ -9,6 +9,10 @@ remappings = [
 solc_version = "0.8.23"
 via_ir = true
 
+[etherscan]
+mainnet = {key = "${ETHERSCAN_KEY}"}
+optimism = {key = "${OPSCAN_KEY}"}
+
 [profile.op_mainnet]
 evm_version = "paris"
 

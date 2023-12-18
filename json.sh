@@ -1,0 +1,7 @@
+#!/bin/bash
+
+forge verify-contract 0x51f8CB69AEb2Ff79b778994621A0c623bac61fAB contracts/V2/MaxMintV2.sol:MaxMintV2 --constructor-args $(cast ae "constructor(address,address)" 0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2 0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0) --show-standard-json-input | tee V2-etherscan-maxmint.json
+forge verify-contract 0xBD9C3f6D7578d3F474f8db765bee88ADD679ef16 contracts/V2/AutoBurnAndClaimV2.sol:AutoBurnAndClaimV2 --constructor-args $(cast ae "constructor(address,address)" 0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2 0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0) --show-standard-json-input | tee V2-etherscan-autoburnandclaim.json
+
+forge verify-contract 0x0171e5010E114473E953Adea6E31961c1247453A contracts/V2/MaxMintV2.sol:MaxMintV2 -c 10 --constructor-args $(cast ae "constructor(address,address)" 0x1Cb059b7e74fD21665968C908806143E744D5F30 0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0) --show-standard-json-input | tee V2-opscan-maxmint.json
+forge verify-contract 0x047c87F36bE345399ab94220a920E6578f597990 contracts/V2/AutoBurnAndClaimV2.sol:AutoBurnAndClaimV2 -c 10 --constructor-args $(cast ae "constructor(address,address)" 0x1Cb059b7e74fD21665968C908806143E744D5F30 0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0) --show-standard-json-input | tee V2-opscan-autoburnandclaim.json

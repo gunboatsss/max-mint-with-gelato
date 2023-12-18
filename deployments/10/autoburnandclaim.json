@@ -1,5 +1,5 @@
 {
-  "address": "0x683fCdbd376e18d23A044f29869B5de79e51C939",
+  "address": "0x047c87F36bE345399ab94220a920E6578f597990",
   "abi": [
     {
       "inputs": [
@@ -97,10 +97,10 @@
     "0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0"
   ],
   "linkedLibraries": {},
-  "deployTxnHash": "0x88a9777625adcfc737bf584bb7855a4f99dc44f2c904a1e9b68185f7c1a3105b",
+  "deployTxnHash": "0xabfa373037d2c21953b90e2d41bc9374c8580993d4cda2a6b986e22e79374f77",
   "sourceName": "contracts/V2/AutoBurnAndClaimV2.sol",
   "contractName": "AutoBurnAndClaimV2",
   "deployedOn": "contract.autoburnandclaim",
-  "gasUsed": 1110161,
-  "gasCost": "9179254"
+  "gasUsed": 1113066,
+  "gasCost": "12872119"
 }

@@ -1,5 +1,5 @@
 {
-  "address": "0x0171e5010E114473E953Adea6E31961c1247453A",
+  "address": "0xBD9C3f6D7578d3F474f8db765bee88ADD679ef16",
   "abi": [
     {
       "inputs": [
@@ -18,11 +18,6 @@
       "type": "constructor"
     },
     {
-      "inputs": [],
-      "name": "InvalidConfig",
-      "type": "error"
-    },
-    {
       "inputs": [
         {
           "internalType": "bytes32",
@@ -32,6 +27,25 @@
       ],
       "name": "ZeroAddressResolved",
       "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "baseFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "inputs": [
@@ -58,35 +72,6 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_account",
-          "type": "address"
-        }
-      ],
-      "name": "config",
-      "outputs": [
-        {
-          "internalType": "enum MaxMintV2.Mode",
-          "name": "mode",
-          "type": "uint8"
-        },
-        {
-          "internalType": "uint120",
-          "name": "parameter",
-          "type": "uint120"
-        },
-        {
-          "internalType": "uint120",
-          "name": "maxBaseFee",
-          "type": "uint120"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "name": "rebuildCaches",
       "outputs": [],
@@ -96,36 +81,26 @@
     {
       "inputs": [
         {
-          "internalType": "enum MaxMintV2.Mode",
-          "name": "_mode",
-          "type": "uint8"
-        },
-        {
-          "internalType": "uint120",
-          "name": "_parameter",
-          "type": "uint120"
-        },
-        {
-          "internalType": "uint120",
-          "name": "_maxBaseFee",
-          "type": "uint120"
+          "internalType": "uint256",
+          "name": "_baseFee",
+          "type": "uint256"
         }
       ],
-      "name": "setConfig",
+      "name": "setBaseFee",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
   "constructorArgs": [
-    "0x1Cb059b7e74fD21665968C908806143E744D5F30",
+    "0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2",
     "0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0"
   ],
   "linkedLibraries": {},
-  "deployTxnHash": "0x7dd33c898bcba65bb11b2a8e802bcf8626aaaa042f65b24bc7068f7b28c076d9",
-  "sourceName": "contracts/V2/MaxMintV2.sol",
-  "contractName": "MaxMintV2",
-  "deployedOn": "contract.maxmint",
-  "gasUsed": 775647,
-  "gasCost": "14040905"
+  "deployTxnHash": "",
+  "sourceName": "contracts/V2/AutoBurnAndClaimV2.sol",
+  "contractName": "AutoBurnAndClaimV2",
+  "deployedOn": "contract.autoburnandclaim",
+  "gasUsed": 0,
+  "gasCost": "0"
 }
