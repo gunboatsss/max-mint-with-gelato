@@ -27,8 +27,7 @@ contract MaxMint {
     bytes32 private constant SYSTEM_SETTINGS = "SystemSettings";
 
     AddressResolver immutable SNXAddressResolver;
-    OpsProxyFactory private constant OPS_PROXY_FACTORY =
-        OpsProxyFactory(0xC815dB16D4be6ddf2685C201937905aBf338F5D7);
+    OpsProxyFactory private constant OPS_PROXY_FACTORY = OpsProxyFactory(0xC815dB16D4be6ddf2685C201937905aBf338F5D7);
     DelegateApprovals private delegateApprovals;
     Synthetix private SNX;
     SystemSettings private systemSettings;
@@ -43,10 +42,8 @@ contract MaxMint {
         _rebuildCaches();
     }
 
-    function checker(
-        address _account
-    ) external view returns (bool, bytes memory execPayload) {
-        (address dedicatedMsgSender, ) = OPS_PROXY_FACTORY.getProxyOf(_account);
+    function checker(address _account) external view returns (bool, bytes memory execPayload) {
+        (address dedicatedMsgSender,) = OPS_PROXY_FACTORY.getProxyOf(_account);
 
         uint256 cRatio = SNX.collateralisationRatio(_account);
         uint256 issuanceRatio = systemSettings.issuanceRatio();
@@ -55,21 +52,17 @@ contract MaxMint {
         if (currentConfig.mode == 0) {
             execPayload = bytes("Disabled");
             return (false, execPayload);
-        }
-
-        else if (currentConfig.mode == 1) {
+        } else if (currentConfig.mode == 1) {
             if (cRatio >= currentConfig.minimumCRatio || currentConfig.minimumCRatio > issuanceRatio) {
                 execPayload = bytes("C-Ratio is lower than set threshold");
                 return (false, execPayload);
             }
-        }
-        else if (currentConfig.mode == 2) {
-            (uint256 maxIssuable,, ) = SNX.remainingIssuableSynths(_account);
-            if(maxIssuable == 0) {
+        } else if (currentConfig.mode == 2) {
+            (uint256 maxIssuable,,) = SNX.remainingIssuableSynths(_account);
+            if (maxIssuable == 0) {
                 execPayload = bytes("Account already below max issuable");
                 return (false, execPayload);
-            }
-            else if(currentConfig.minimumIssuedsUSD > maxIssuable) {
+            } else if (currentConfig.minimumIssuedsUSD > maxIssuable) {
                 execPayload = bytes("sUSD avaliable is lower than set threshold");
                 return (false, execPayload);
             }
@@ -80,16 +73,13 @@ contract MaxMint {
             return (false, execPayload);
         }
 
-        execPayload = abi.encodeWithSelector(
-            SNX.issueMaxSynthsOnBehalf.selector,
-            _account
-        );
+        execPayload = abi.encodeWithSelector(SNX.issueMaxSynthsOnBehalf.selector, _account);
 
         return (true, execPayload);
     }
 
     function setConfig(Configuation calldata _config) external {
-        if(_config.mode > 2) revert InvalidConfig();
+        if (_config.mode > 2) revert InvalidConfig();
         config[msg.sender] = _config;
     }
 

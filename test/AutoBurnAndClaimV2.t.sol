@@ -27,14 +27,15 @@ contract AutoBurnAndClaimV2Test is Test {
 
     function setUp() public {
         vm.createSelectFork(ETH_MAINNET_RPC, 18634930);
-        abac = new AutoBurnAndClaimV2(0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2, 0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0);
+        abac =
+        new AutoBurnAndClaimV2(0x4E3b31eB0E5CB73641EE1E65E7dCEFe520bA3ef2, 0x2A6C106ae13B558BB9E2Ec64Bd2f1f7BEFF3A5E0);
     }
 
     function test_happy_path() public {
         vm.pauseGasMetering();
         console.log(debtShares.balanceOf(target));
         (address dedicatedMsgSender, bool deployed) = ops.getProxyOf(target);
-        if(!deployed) {
+        if (!deployed) {
             ops.deployFor(target);
         }
         vm.startPrank(target);
@@ -46,7 +47,7 @@ contract AutoBurnAndClaimV2Test is Test {
         (bool ready, bytes memory execPayload) = abac.checker(target);
         console2.logBytes(execPayload);
         assertTrue(ready, "can't burn and claim");
-        (bool succ, ) = dedicatedMsgSender.call(execPayload);
+        (bool succ,) = dedicatedMsgSender.call(execPayload);
         assertTrue(succ, "burn and claim failed");
     }
 
@@ -55,7 +56,7 @@ contract AutoBurnAndClaimV2Test is Test {
         vm.pauseGasMetering();
         console.log(debtShares.balanceOf(target));
         (address dedicatedMsgSender, bool deployed) = ops.getProxyOf(target);
-        if(!deployed) {
+        if (!deployed) {
             ops.deployFor(target);
         }
         vm.startPrank(target);
@@ -73,16 +74,11 @@ contract AutoBurnAndClaimV2Test is Test {
         checkValues[0] = 0;
         assertEq0(
             execPayload,
-            abi.encodeWithSelector(
-                OpsProxy.batchExecuteCall.selector,
-                checkAddress,
-                checkCalldata,
-                checkValues
-            ),
+            abi.encodeWithSelector(OpsProxy.batchExecuteCall.selector, checkAddress, checkCalldata, checkValues),
             "expect claim tx only"
         );
         assertTrue(ready, "claim condition failed");
-        (bool succ, ) = dedicatedMsgSender.call(execPayload);
+        (bool succ,) = dedicatedMsgSender.call(execPayload);
         assertTrue(succ, "claim failed");
     }
 
@@ -102,7 +98,7 @@ contract AutoBurnAndClaimV2Test is Test {
 
         // the test would check for snx reward but it is really unlikely that snx reward completely gone
 
-        (address dedicatedMsgSender, ) = ops.getProxyOf(target);
+        (address dedicatedMsgSender,) = ops.getProxyOf(target);
         vm.prank(target);
         delegate.approveClaimOnBehalf(dedicatedMsgSender);
         (succ, execPayload) = abac.checker(target);
@@ -113,16 +109,12 @@ contract AutoBurnAndClaimV2Test is Test {
         vm.prank(target);
         delegate.approveBurnOnBehalf(dedicatedMsgSender);
 
-        uint256 balance = stdstore
-                            .target(0x05a9CBe762B36632b3594DA4F082340E0e5343e8)
-                            .sig("balanceOf(address)")
-                            .with_key(target)
-                            .read_uint();
-        uint256 slot = stdstore
-                            .target(0x05a9CBe762B36632b3594DA4F082340E0e5343e8)
-                            .sig("balanceOf(address)")
-                            .with_key(target)
-                            .find();
+        uint256 balance = stdstore.target(0x05a9CBe762B36632b3594DA4F082340E0e5343e8).sig("balanceOf(address)").with_key(
+            target
+        ).read_uint();
+        uint256 slot = stdstore.target(0x05a9CBe762B36632b3594DA4F082340E0e5343e8).sig("balanceOf(address)").with_key(
+            target
+        ).find();
         console2.log("balance: ", balance);
         console2.log("slot: ", slot);
         // manipulate balance such that it can't fix the balance
@@ -137,7 +129,7 @@ contract AutoBurnAndClaimV2Test is Test {
         SNX.burnSynthsToTarget();
         feePool.claimFees();
         (address dedicatedMsgSender, bool deployed) = ops.getProxyOf(target);
-        if(!deployed) {
+        if (!deployed) {
             ops.deployFor(target);
         }
         delegate.approveClaimOnBehalf(dedicatedMsgSender);

@@ -31,39 +31,21 @@ contract MaxMintETHTest is Test {
             })
         );
     }
+
     function test_InvalidConfig() public {
         vm.expectRevert();
-        mm.setConfig(
-            MaxMint.Configuation({
-                mode: 3,
-                minimumCRatio: 0,
-                minimumIssuedsUSD: 0
-            })
-        );
+        mm.setConfig(MaxMint.Configuation({mode: 3, minimumCRatio: 0, minimumIssuedsUSD: 0}));
         vm.expectRevert();
-        mm.setConfig(
-            MaxMint.Configuation(
-                uint8(8),
-                uint120(0),
-                uint120(0)
-            )
-        );
+        mm.setConfig(MaxMint.Configuation(uint8(8), uint120(0), uint120(0)));
     }
+
     function test_NotAllowToMint() public {
         (address dedicatedMsgSender,) = ops.getProxyOf(minter);
         (bool shouldCall, bytes memory result) = mm.checker(minter);
         assertEq(result, bytes("Disabled"));
         assertFalse(shouldCall);
         vm.prank(minter);
-        mm.setConfig(
-            MaxMint.Configuation(
-                {
-                    mode: 2,
-                    minimumCRatio: 0,
-                    minimumIssuedsUSD: 100e18
-                }
-            )
-        );
+        mm.setConfig(MaxMint.Configuation({mode: 2, minimumCRatio: 0, minimumIssuedsUSD: 100e18}));
         //(uint256 maxIssuable, uint256 alreadyIssued,) = SNX.remainingIssuableSynths(minter);
         //console2.log("maxissue: ", maxIssuable, "alreadyissued", alreadyIssued);
         console2.log("can issue for ", delegate.canIssueFor(minter, dedicatedMsgSender));
@@ -71,93 +53,76 @@ contract MaxMintETHTest is Test {
         assertEq(result, bytes("Not approved for issuing"));
         assertFalse(shouldCall);
     }
+
     function test_MintByMinimumSusd() public {
         (address dedicatedMsgSender,) = ops.getProxyOf(minter);
         vm.startPrank(minter);
         mm.setConfig(
-            MaxMint.Configuation(
-                {
-                    mode: 2,
-                    minimumCRatio: 0, // 510%
-                    minimumIssuedsUSD: 100e18
-                }
-            )
+            MaxMint.Configuation({
+                mode: 2,
+                minimumCRatio: 0, // 510%
+                minimumIssuedsUSD: 100e18
+            })
         );
         delegate.approveIssueOnBehalf(dedicatedMsgSender);
         (bool shouldCall, bytes memory result) = mm.checker(minter);
         assertTrue(shouldCall);
-        assertEq(
-            result,
-            abi.encodeWithSelector(SNX.issueMaxSynthsOnBehalf.selector, minter)
-        );
+        assertEq(result, abi.encodeWithSelector(SNX.issueMaxSynthsOnBehalf.selector, minter));
         vm.stopPrank();
         vm.prank(dedicatedMsgSender);
         SNX.issueMaxSynthsOnBehalf(minter);
     }
+
     function test_MinimumSusdNotReach() public {
         (address dedicatedMsgSender,) = ops.getProxyOf(minter);
         vm.startPrank(minter);
         mm.setConfig(
-            MaxMint.Configuation(
-                {
-                    mode: 2,
-                    minimumCRatio: 0, // 510%
-                    minimumIssuedsUSD: 100000e18
-                }
-            )
+            MaxMint.Configuation({
+                mode: 2,
+                minimumCRatio: 0, // 510%
+                minimumIssuedsUSD: 100000e18
+            })
         );
         delegate.approveIssueOnBehalf(dedicatedMsgSender);
         (bool shouldCall, bytes memory result) = mm.checker(minter);
         assertFalse(shouldCall);
-        assertEq(
-            result,
-            bytes("sUSD avaliable is lower than set threshold")
-        );
+        assertEq(result, bytes("sUSD avaliable is lower than set threshold"));
     }
+
     function test_MintByCRatio() public {
         (address dedicatedMsgSender,) = ops.getProxyOf(minter);
         vm.startPrank(minter);
         console2.log("c-ratio ", SNX.collateralisationRatio(minter));
         mm.setConfig(
-            MaxMint.Configuation(
-                {
-                    mode: 1,
-                    minimumCRatio: 0.19607843137e18, // 510%
-                    minimumIssuedsUSD: 0
-                }
-            )
+            MaxMint.Configuation({
+                mode: 1,
+                minimumCRatio: 0.19607843137e18, // 510%
+                minimumIssuedsUSD: 0
+            })
         );
         delegate.approveIssueOnBehalf(dedicatedMsgSender);
         (bool shouldCall, bytes memory result) = mm.checker(minter);
         assertTrue(shouldCall);
-        assertEq(
-            result,
-            abi.encodeWithSelector(SNX.issueMaxSynthsOnBehalf.selector, minter)
-        );
+        assertEq(result, abi.encodeWithSelector(SNX.issueMaxSynthsOnBehalf.selector, minter));
         vm.stopPrank();
         vm.prank(dedicatedMsgSender);
         SNX.issueMaxSynthsOnBehalf(minter);
     }
+
     function test_CRatioNotReached() public {
         (address dedicatedMsgSender,) = ops.getProxyOf(minter);
         vm.startPrank(minter);
         console2.log("c-ratio ", SNX.collateralisationRatio(minter));
         mm.setConfig(
-            MaxMint.Configuation(
-                {
-                    mode: 1,
-                    minimumCRatio: 0.16666666666e18, // 600%
-                    minimumIssuedsUSD: 0
-                }
-            )
+            MaxMint.Configuation({
+                mode: 1,
+                minimumCRatio: 0.16666666666e18, // 600%
+                minimumIssuedsUSD: 0
+            })
         );
         delegate.approveIssueOnBehalf(dedicatedMsgSender);
         (bool shouldCall, bytes memory result) = mm.checker(minter);
         assertFalse(shouldCall);
-        assertEq(
-            result,
-            bytes("C-Ratio is lower than set threshold")
-        );
-
-    }    
+        assertEq(result, bytes("C-Ratio is lower than set threshold"));
+    }
 }

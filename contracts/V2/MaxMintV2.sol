@@ -15,8 +15,12 @@ contract MaxMintV2 {
     // @custom:mode 0 for disabled, 1 for price increase, 2 for using minimum issued sUSD
     // @custom:parameter parameter to use for calculation, depending on mode selected
     // @custom:maxBaseFee maximum block.basefee to not mint
-    enum Mode {DISABLED, BY_PRICE_INCRASE_PERCENT, BY_MINIMUM_SUSD_ISSUED }
-    
+    enum Mode {
+        DISABLED,
+        BY_PRICE_INCRASE_PERCENT,
+        BY_MINIMUM_SUSD_ISSUED
+    }
+
     struct Configuation {
         Mode mode;
         uint120 parameter;
@@ -30,7 +34,7 @@ contract MaxMintV2 {
     bytes32 private constant SYSTEM_SETTINGS = "SystemSettings";
 
     AddressResolver immutable SNXAddressResolver;
-    OpsProxyFactory immutable OPS_PROXY_FACTORY ;
+    OpsProxyFactory immutable OPS_PROXY_FACTORY;
     DelegateApprovals private delegateApprovals;
     Synthetix private SNX;
     SystemSettings private systemSettings;
@@ -48,10 +52,8 @@ contract MaxMintV2 {
         OPS_PROXY_FACTORY = OpsProxyFactory(proxyModule.opsProxyFactory());
     }
 
-    function checker(
-        address _account
-    ) external view returns (bool, bytes memory execPayload) {
-        (address dedicatedMsgSender, ) = OPS_PROXY_FACTORY.getProxyOf(_account);
+    function checker(address _account) external view returns (bool, bytes memory execPayload) {
+        (address dedicatedMsgSender,) = OPS_PROXY_FACTORY.getProxyOf(_account);
 
         uint256 cRatio = SNX.collateralisationRatio(_account);
         uint256 issuanceRatio = systemSettings.issuanceRatio();
@@ -65,22 +67,18 @@ contract MaxMintV2 {
         if (block.basefee > currentConfig.maxBaseFee && currentConfig.maxBaseFee > 0) {
             execPayload = bytes("Base fee too high");
             return (false, execPayload);
-        }
-
-        else if (currentConfig.mode == Mode.BY_PRICE_INCRASE_PERCENT) {
+        } else if (currentConfig.mode == Mode.BY_PRICE_INCRASE_PERCENT) {
             uint256 targetCRatio = issuanceRatio * 10000 / (10000 + currentConfig.parameter);
-            if(cRatio >= targetCRatio) {
+            if (cRatio >= targetCRatio) {
                 execPayload = bytes("Account C-ratio is lower than target");
                 return (false, execPayload);
             }
-        }
-        else if (currentConfig.mode == Mode.BY_MINIMUM_SUSD_ISSUED) {
-            (uint256 maxIssuable,, ) = SNX.remainingIssuableSynths(_account);
-            if(maxIssuable == 0) {
+        } else if (currentConfig.mode == Mode.BY_MINIMUM_SUSD_ISSUED) {
+            (uint256 maxIssuable,,) = SNX.remainingIssuableSynths(_account);
+            if (maxIssuable == 0) {
                 execPayload = bytes("Account already below max issuable");
                 return (false, execPayload);
-            }
-            else if(currentConfig.parameter > maxIssuable) {
+            } else if (currentConfig.parameter > maxIssuable) {
                 execPayload = bytes("sUSD avaliable is lower than set threshold");
                 return (false, execPayload);
             }
@@ -91,20 +89,13 @@ contract MaxMintV2 {
             return (false, execPayload);
         }
 
-        execPayload = abi.encodeWithSelector(
-            SNX.issueMaxSynthsOnBehalf.selector,
-            _account
-        );
+        execPayload = abi.encodeWithSelector(SNX.issueMaxSynthsOnBehalf.selector, _account);
 
         return (true, execPayload);
     }
 
     function setConfig(Mode _mode, uint120 _parameter, uint120 _maxBaseFee) external {
-        config[msg.sender] = Configuation({
-            mode: _mode,
-            parameter: _parameter,
-            maxBaseFee: _maxBaseFee
-        });
+        config[msg.sender] = Configuation({mode: _mode, parameter: _parameter, maxBaseFee: _maxBaseFee});
     }
 
     function rebuildCaches() external {

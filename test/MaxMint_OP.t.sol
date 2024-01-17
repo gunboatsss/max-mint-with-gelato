@@ -24,22 +24,11 @@ contract MaxMintOPTest is Test {
             })
         );
     }
+
     function test_InvalidConfig() public {
         vm.expectRevert();
-        mm.setConfig(
-            MaxMint.Configuation({
-                mode: 3,
-                minimumCRatio: 0,
-                minimumIssuedsUSD: 0
-            })
-        );
+        mm.setConfig(MaxMint.Configuation({mode: 3, minimumCRatio: 0, minimumIssuedsUSD: 0}));
         vm.expectRevert();
-        mm.setConfig(
-            MaxMint.Configuation(
-                uint8(8),
-                uint120(0),
-                uint120(0)
-            )
-        );
+        mm.setConfig(MaxMint.Configuation(uint8(8), uint120(0), uint120(0)));
     }
 }
